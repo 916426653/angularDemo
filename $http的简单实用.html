@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="query()">请求</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app',[])
+            .controller('myCtrl',function ($scope,$http ) {
+                $scope.query = function () {
+                    $http({
+                        method:'get',
+                        url:'data/people.json'
+                    }).then(function (res) {
+                        console.log(res);
+                    })
+                }
+                
+            })
+</script>
+</html>

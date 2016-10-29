@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="query()">请求</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app',[])
+            .controller('myCtrl',function ($http,$scope) {
+        
+                
+                $scope.query=function () {
+                    $http({
+                        method:'post',
+                        data:{name:'zs'},
+                        url:'data/doc.json'
+                    }).then(function (res) {
+                        console.log(res)
+                    })
+                }
+                
+               
+            }).run(function ($http) {
+                //全局对$http 的处理
+            //响应之前 处理一下响应数据
+            function transformReponseToTip(obj) {
+                console.log(obj);
+                obj=obj.tid;
+                return obj;
+            }
+
+            //发送之前 处理一下请求
+            function transformRequestToTip(obj) {
+                console.log(obj)
+                //  do something
+                return obj
+            }
+        //$http.defaults.transformResponse.push(transformReponseToTip);
+        //默认的transformResponse对数据进行了处理,(字符串转为了json)
+        //$http.defaults.transformResponse.pop();
+
+        //默认的transformRequest,把参数转换为JSON字符串(file,bold,formdata这些不转)。
+        //$http.defaults.transformRequest.pop();
+        $http.defaults.transformRequest.push(transformReponseToTip);
+        console.log($http.defaults.transformRequest[0]);
+        
+    })
+</script>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="create()">创建缓存</button>
+<div>
+    <input type="text" ng-model="key">
+    <input type="text" ng-model="val">
+</div>
+<button ng-click="add(key,val)">添加</button>
+<button ng-click="get(key)">获取</button>
+<button ng-click="info()">信息</button>
+<button ng-click="getDoc()">请求文档</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    var cache;
+    angular.module('app',[])
+            .controller('myCtrl',function ($scope,$http,$cacheFactory) {
+                $scope.create = function () {
+                    cache = new $cacheFactory('cacheid');
+                    console.log(cache)
+                }
+                $scope.add = function (key,val) {
+                    console.log(cache)
+                    cache.put(key,val)
+                }
+                $scope.get = function (key) {
+                    console.log(cache)
+                    cache.get(key)
+                }
+                $scope.info = function () {
+                    console.log(cache)
+                    console.log(cache.info())
+                }
+                $scope.getDoc = function () {
+                    $http({
+                        url:'data/doc.json',
+                        cache:cache
+                    })
+                }
+            })
+</script>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="query()">请求</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app',[])
+            .controller('myCtrl',function ($http,$scope) {
+                $scope.query=function () {
+                    //局部缓存
+                    $http({
+                        url:'data/doc.json',
+                        cache:true
+                    }).then(function (res) {
+                        console.log(res)
+                    })
+                }
+            }).run(function ($http) {
+        $http.defaults.cache=true;
+    })
+</script>
+</html>

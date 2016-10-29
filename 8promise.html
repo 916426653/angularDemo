@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="do()">start</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app',[])
+            .controller('myCtrl',function ($http,$scope,$q,$interval,$timeout) {
+                $scope.do=function () {
+                    var defer = $q.defer();
+
+                    function successCallback(val) {
+                        console.log(val)
+                    }
+                    function errorCallback(val) {
+                        console.log(val)
+                    }
+                    function notifyCallback(val) {
+                        console.log(val)
+                    }
+
+                    defer.promise.then(successCallback,errorCallback,notifyCallback)
+
+                    var count = 0;
+
+                    $interval(function () {
+                        defer.notify('notify'+count);
+                        ++count;
+
+                    },1000)
+                    $timeout(function () {
+                        defer.resolve('you success')
+                    },3000)
+
+                    $timeout(function () {
+                        defer.reject('you defailt')
+                    },4000)
+
+                }
+
+
+
+            })
+</script>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="query()">请求</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app', [])
+            .controller('myCtrl', function ($scope, $http) {
+                $scope.query = function () {
+                    $http({
+                        url: 'data/doc.json',
+                        method: 'get'
+                    }).then(function (res) {
+                        console.log(res)
+                    })
+                }
+            })
+            //只能在配置阶段对provider 进行配置
+            .config(function ($httpProvider) {
+                $httpProvider.interceptors.push(function ($q) {
+                    return {
+                        /**
+                         * val 是http 请求的配置项
+                         * */
+                        request: function (val) {
+                            console.log(val)
+                            val.method = 'post';
+                            val.data = 'token=abcd123-12431234-23423423';
+                            console.log(val)
+                            return val;
+
+                        },
+                        response:function (val) {
+                            console.log(val)
+
+                            return val.data.tid;
+                        },
+                        requestError:function (val) {
+                            console.log(val)
+                        },
+                        responseError:function (val) {
+                            console.log(val);
+                        }
+                    }
+                })
+            })
+</script>
+</html>

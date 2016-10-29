@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="lib/angular.js"></script>
+    <script src="lib/resource.js"></script>
+    <style>
+        div {
+            border: 1px solid red;
+            padding: 5px;
+        }
+
+        li{
+            list-style-type: none;
+            border:1px solid green;
+            padding:5px 10px;
+        }
+    </style>
+</head>
+<body ng-controller="myCtr">
+
+<label>姓名:</label><input type="text" ng-model="name"/>
+<label>年龄</label><input type="text" ng-model="age"/>
+<div>
+    <button ng-click="doQuery()"> 开始取数据</button>
+</div>
+<div>
+    <button ng-click="doGet(name)"> 开始获取某个人</button>
+</div>
+<div>
+    <button ng-click="doRemove(name)"> 删除某个人</button>
+</div>
+<div>
+    <button ng-click="doCreate(name,age)"> 新增某个人</button>
+</div>
+<div>
+    <ul>
+        <li ng-repeat="item in data">
+            <label>姓名:</label><span>{{item.name}}</span>
+            <label>年龄:</label><span>{{item.age}}</span>
+        </li>
+    </ul>
+</div>
+<script>
+    var g;
+    /**
+     * 和$http区别:
+     * 第一是:不用处理回调。
+     *
+     * //创建资源
+     * var obj = $resource(url);
+     * //获取资源
+     * //刚执行的时候,g是一个{}。此时,g里面的promise的状态是$resolved:false。
+     * // 当$resolved:true,把下载好的数据,填充在g上面。现在,g有下载好的数据。然后scope检测到变化,渲染到页面。
+     *
+     * var g = obj.get();
+     *
+     *
+     * 增:save--同改。。
+     * 删:delete----自动映射成$http的delete,把delete的参数也放到url里面了
+     * 改:save---自动映射成$http的post,把save的参数放到请求体里面了。
+     * 查:get---自动映射成$http的get,如果get里面有参数,把参数组合到请求的url里面。
+     *
+     *
+     * $resource 的特点:
+     * 1,比$http比更抽象,语义化更强。
+     * 2,回调不用写了,逻辑更简单了。
+     *
+     *
+     * RESTFUL 架构:
+     * 1.一个资源对应一个URL
+     * 2.一个资源上面可以操作 get,post,delte
+     *
+     *
+     * */
+
+    angular.module('app', ['ngResource'])
+            .controller('myCtr', function ($scope, $q, $http, $resource) {
+                //整个后台的操作就是CRUD(增删更查);
+
+                //新增的接口
+                $scope.doCreate = function (name,age) {
+
+
+                    //创建一个资源--列表接口
+                    var obj = $resource('create');
+
+                    //获取数据
+                    $scope.data = obj.save({name: name,age:age});
+
+
+                    console.log($scope.data.tid);
+
+                }
+
+                //获取列表
+                $scope.doQuery = function () {
+
+
+                    //创建一个资源--列表接口
+                    var obj = $resource('list');
+
+                    //获取数据
+                    g = $scope.data = obj.get();
+
+
+                    console.log(g);
+
+                }
+
+                //获取详情页---某个人
+                $scope.doGet = function (name) {
+
+
+                    //创建一个资源---详情接口
+                    var obj = $resource('get');
+
+                    //获取数据
+                    $scope.data = obj.get({name: name});
+
+
+                    g = $scope.data;
+
+                }
+
+                $scope.doRemove = function (name) {
+
+
+                    //创建一个资源--删除接口
+                    var obj = $resource('remove');
+
+                    //获取数据
+                    $scope.data = obj.delete({name: name});
+
+
+                    console.log($scope.data.tid);
+
+                }
+
+            });
+
+</script>
+</body>
+</html>

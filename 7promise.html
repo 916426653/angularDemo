@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="break()">start</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app',[])
+            .controller('myCtrl',function ($timeout,$scope,$http,$q,$interval) {
+                /**
+                 * defer 一个有一个promise属性
+                 * 三个方法 改变 promsie 状态
+                 * resolve
+                 * reject
+                 * notify
+                 *
+                 * */
+
+                $scope.break = function () {
+
+                    var defer1 = $q.defer();
+                    var defer2 = $q.defer();
+
+                    $timeout(function () {
+                        defer1.resolve('successs')
+                    },1000)
+                    defer1.promise.then(function (val) {
+                        console.log('first'+val);
+                        $timeout(function () {
+                            defer2.resolve('go to chain be kill');
+                        },2000)
+                        return defer2.promise
+                    }).then(function (val) {
+                        console.log(val)
+                        return val;
+                    })
+
+                    /*
+                     * 无论成功失败,最后都会调用。
+                     *
+                     * **/
+                            .finally(function () {
+                        console.log('finally')
+                    })
+                }
+            })
+</script>
+</html>

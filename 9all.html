@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+<button ng-click="doChicken()">start</button>
+</body>
+<script src="lib/angular.js"></script>
+<script>
+    angular.module('app',[])
+            .controller('myCtrl',function ($scope,$http,$timeout,$q) {
+                $scope.doChicken = function () {
+                    var defer1 = $q.defer();
+                    var defer2 = $q.defer();
+                    var defer3 = $q.defer();
+                    
+                    $timeout(function () {
+                        console.log('salt is good')
+                    },1000)
+                    $timeout(function () {
+                        console.log('chicken is good')
+                    },2000)
+                    $timeout(function () {
+                        console.log('pin is good')
+                    },3000)
+
+
+                    /**
+                     * 全部成功才 触发
+                     * */
+                    $q.all([defer2,defer1,defer3]).then(function (val) {
+                        console.log(val)
+                    })
+
+                    /**
+                     * 一个成功,就会返回。
+                     * */
+                    $q.race([defer1.promise, defer2.promise, defer3.promise]).then(function (val) {
+                        console.log(val);
+                    })
+                }
+            })
+</script>
+</html>
