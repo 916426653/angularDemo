@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        @keyframes myAnimation {
+            from {
+                width: 0px;
+                height: 0px;
+                opacity: 0;
+            }
+
+            to {
+                height: 100px;
+                width: 300px;
+                opacity: 1;
+
+            }
+        }
+
+
+        @keyframes myAnimationLeave {
+            from {
+                height: 100px;
+                width: 100px;
+                opacity: 1;
+
+            }
+
+            to {
+                width: 0px;
+                height: 0px;
+                opacity: 0;
+            }
+        }
+
+        .fade {
+            height: 100px;
+            width: 300px;
+            background: greenyellow;
+
+            white-space: nowrap;
+            overflow: hidden;
+            border:1px solid mediumaquamarine;
+        }
+
+        .fade.ng-enter{
+            animation: myAnimation 2s;
+        }
+        .fade.ng-enter-stagger {
+            animation-delay: 300ms;
+        }
+
+        .fade.ng-leave{
+            animation: myAnimationLeave 2s;
+        }
+    </style>
+
+
+</head>
+<body ng-controller="myCtrl">
+
+<div class="fade" ng-repeat="item in arr">{{item}}</div>
+<input type="button" value="开始动画" ng-click="start()"/>
+
+</body>
+<script src="lib/angular.js"></script>
+<script src="lib/angular-animate.js"></script>
+<script>
+    angular.module('app',['ngAnimate'])
+            .controller('myCtrl',function ($scope) {
+                $scope.start=function () {
+                    $scope.arr = ['1','2','3','4','5','6'];
+                }
+            })
+</script>
+</html>

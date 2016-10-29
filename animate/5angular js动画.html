@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-controller="myCtrl">
+
+</body>
+<script src="lib/angular.js"></script>
+<script src="lib/angular-animate.js"></script>
+<script>
+    angular.module('app',['ngAnimate'])
+            .animation('.fate',function () {
+                return{
+                    /**
+                     * ele 当前动画的元素
+                     * done 完成是通知 angular
+                     * */
+                    enter:function () {
+
+                    }
+                }
+            })
+            .controller('myCtrl',function ($scope) {
+                $scope.arr = ['1','2','3','4','5','6'];
+            })
+</script>
+</html>

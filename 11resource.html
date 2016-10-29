@@ -11,10 +11,10 @@
             padding: 5px;
         }
 
-        li{
+        li {
             list-style-type: none;
-            border:1px solid green;
-            padding:5px 10px;
+            border: 1px solid green;
+            padding: 5px 10px;
         }
     </style>
 </head>
@@ -80,15 +80,14 @@
                 //整个后台的操作就是CRUD(增删更查);
 
                 //新增的接口
-                $scope.doCreate = function (name,age) {
+                $scope.doCreate = function (name, age) {
 
 
                     //创建一个资源--列表接口
                     var obj = $resource('create');
 
                     //获取数据
-                    $scope.data = obj.save({name: name,age:age});
-
+                    $scope.data = obj.save({name: name, age: age});
 
                     console.log($scope.data.tid);
 

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+
+        @keyframes myAnimate {
+            from{
+                width: 0;
+                height: 0;
+                background-color: aqua;
+            }
+            to{
+                width: 200px;
+                height: 200px;
+                background-color: blueviolet;
+            }
+        }
+
+        #demo{
+            overflow: hidden;
+            width: 100px;
+            height: 100px;
+            background-color: antiquewhite;
+
+        }
+        #demo.ng-enter{
+           animation: myAnimate 2s;
+        }
+        #demo.ng-leave{
+            transition: all 2s;
+            height: 0;
+            width: 0;
+        }
+    </style>
+</head>
+<body ng-controller="myCtrl">
+<div ng-init="transtion"></div>
+<div id="demo" ng-if="transtion">
+过度动画
+</div>
+<input type="button" value="start" ng-click="transtion =!transtion">
+</body>
+<script src="lib/angular.js"></script>
+<script src="lib/angular-animate.js"></script>
+<script>
+    angular.module('app',['ngAnimate'])
+            .controller('myCtrl',function ($scope) {
+
+            })
+</script>
+</html>
