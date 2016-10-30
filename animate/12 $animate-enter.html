@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .fade{
+            width: 50px;
+            height: 50px;
+            background-color: antiquewhite;
+        }
+    </style>
+</head>
+<body ng-controller="myCtrl">
+<div class="fade" ng-click="addClass()">
+添加类
+</div>
+</body>
+<script src="lib/jquery-3.1.0.js"></script>
+<script src="lib/angular.js"></script>
+<script src="lib/angular-animate.js"></script>
+<script>
+    angular.module('app',['ngAnimate'])
+            .controller('myCtrl',function ($scope,$animate) {
+                $scope.addClass = function () {
+                    var fade = angular.element(document.body).find('.fade');
+
+                    console.log(fade)
+                    $animate.addClass(fade,'fade1',function () {
+                        console.log('done')
+                    })
+                }
+            })
+</script>
+</html>

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
     <style>
         .fade{
             position: absolute;
@@ -14,7 +13,6 @@
             white-space: nowrap;
         }
     </style>
-
 </head>
 <body>
 <ul ng-init="name" ng-switch="name">
@@ -37,7 +35,6 @@
 <script>
     angular.module('app',['ngAnimate'])
             .animation('.fade',function () {
-
                 return{
                     enter:function (ele,done) {
                         $(ele).animate({left:'50%'},3000);
@@ -47,7 +44,6 @@
                         $(ele).animate({left:'-10%'},3000);
                     }
                 }
-
             })
 </script>
 </html>

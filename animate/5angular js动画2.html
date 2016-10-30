@@ -10,8 +10,10 @@
 <input type="button" value="开始动画" ng-click="start()"/>
 </body>
 
+<script src="lib/jquery-3.1.0.js"></script>
 <script src="lib/angular.js"></script>
 <script src="lib/angular-animate.js"></script>
+
 <script>
     angular.module('app',['ngAnimate'])
             .controller('myCtrl',function ($scope) {
@@ -23,21 +25,8 @@
             .animation('.fade',function () {
                 return{
                     enter:function (ele,done) {
-                        ele = ele[0];
-                        var intervalId;
-                        var animateFn = function () {
-                            var opacity = ele.style.opacity;
 
-                            ele.style.opacity = +opacity + 0.1;
-                            console.log(opacity);
-                            if(ele.style.opacity>=1){
-                                clearInterval(intervalId);
-                                done()
-                            }
-                        }
-
-                        ele.style.opacity = 0;
-                        intervalId = setInterval(animateFn,1000)
+                        $(ele).css({opacity:0}).animate({opacity:1},3000)
 
                     },
                     leave:function () {
